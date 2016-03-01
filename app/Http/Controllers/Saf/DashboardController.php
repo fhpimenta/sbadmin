@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Saf;
 use App\Http\Controllers\Controller;
+use App\Models\Pessoa;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,10 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('dashboard.index');
+        $pessoa = new Pessoa();
+
+        $quantPessoas = $pessoa->quant();
+
+        return view('dashboard.index', ['quantPessoas' => $quantPessoas]);
     }
 }

@@ -18,16 +18,16 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-8">
-                            {!! Form::model($user, array('route' => ['user.update', $user->id], 'method' => 'POST')) !!}
+                            {!! Form::open(['route' => 'user.update', 'method' => 'POST']) !!}
 
                             <div class="form-group">
                                 {!! Form::label('name', 'Nome') !!}
-                                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('name', !empty(old('name')) ? old('name') : $user->name, ['class' => 'form-control']) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('email', 'Email') !!}
-                                {!! Form::email('email', null, ['class' => 'form-control']) !!}
+                                {!! Form::email('email', !empty(old('email')) ? old('email') : $user->email , ['class' => 'form-control']) !!}
                             </div>
 
                             {!! Form::submit('Editar usuário', ['class' => 'btn btn-success']) !!}

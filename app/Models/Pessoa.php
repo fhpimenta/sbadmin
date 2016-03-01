@@ -26,4 +26,11 @@ class Pessoa extends Model
         return $this->hasMany('App\Models\Telefone');
     }
 
+    public function quant()
+    {
+        $quant = $this->all()->count();
+
+        return $quant;
+    }
+
 }
