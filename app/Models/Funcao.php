@@ -13,6 +13,6 @@ class Funcao extends Model
 
     public function pessoas()
     {
-        return $this->belongsToMany('App\Models\Pessoa', 'pessoas_funcoes');
+        return $this->belongsToMany('App\Models\Pessoa', 'pessoas_funcoes', 'funcoes_id', 'pessoas_id');
     }
 }

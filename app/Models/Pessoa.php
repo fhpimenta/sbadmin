@@ -13,7 +13,7 @@ class Pessoa extends Model
 
     public function funcoes()
     {
-        return $this->belongsToMany('App\Models\Funcao', 'pessoas_funcoes');
+        return $this->belongsToMany('App\Models\Funcao', 'pessoas_funcoes','pessoas_id', 'funcoes_id');
     }
 
     public function endereco()

@@ -28,16 +28,16 @@
                 <a href=""><i class="fa fa-table"></i>&nbsp; Visualização<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Associados</a>
+                        <a href="{{ url('/associados') }}">Associados <span class="badge">1</span></a>
                     </li>
                     <li>
-                        <a href="#">Doadores</a>
+                        <a href="{{ url('/doadores') }}">Doadores</a>
                     </li>
                     <li>
-                        <a href="#">Clube do Livro</a>
+                        <a href="{{ url('/clubedolivro') }}">Clube do Livro</a>
                     </li>
                     <li>
-                        <a href="#">Funcionários</a>
+                        <a href="{{ url('/prestadores') }}">Prestadores de Serviço</a>
                     </li>
                 </ul>
             </li>

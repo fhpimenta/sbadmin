@@ -9,6 +9,7 @@ use App\Models\PessoaFuncao;
 use DB;
 use App\Models\Telefone;
 use Laracasts\Flash\Flash;
+use Symfony\Component\HttpFoundation\Request;
 
 class PessoaController extends Controller
 {
@@ -70,5 +71,41 @@ class PessoaController extends Controller
             Flash::error('Ocorreu um erro ao cadastrar a pessoa');
             return redirect('/pessoas/cadastrar');
         }
+    }
+
+    public function getPessoas(Request $request)
+    {
+        $funcoes = [
+            'associados' => array(
+                'id' => 1,
+                'title' => 'Associados'
+            ),
+            'doadores' => array(
+                'id' => 2,
+                'title' => 'Doadores'
+            ),
+            'clubedolivro' => array(
+                'id' => 3,
+                'title' => 'Participantes do Clube do Livro'
+            ),
+            'prestadores' => array(
+                'id' => 4,
+                'title' => 'Prestadores de Serviços'
+            )
+        ];
+
+        $uri = $request->path();
+
+        $pessoas = DB::table('pessoas AS p')
+                            ->join('pessoas_funcoes AS pf', 'p.id', '=', 'pf.pessoas_id')
+                            ->join('funcoes AS f', 'f.id', '=', 'pf.funcoes_id')
+                            ->select('p.*')
+                            ->where('f.id', '=', $funcoes[$uri]['id'])
+                            ->get();
+        if(empty($pessoas)){
+            $pessoas = null;
+        }
+
+        return view('pessoa.table', ['title' => $funcoes[$uri]['title'], 'pessoas' => $pessoas]);
     }
 }

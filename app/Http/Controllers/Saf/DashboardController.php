@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\Saf;
 use App\Http\Controllers\Controller;
+use App\Models\Funcao;
 use App\Models\Pessoa;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -19,7 +21,9 @@ class DashboardController extends Controller
     {
         $pessoa = new Pessoa();
 
-        $quantPessoas = $pessoa->quant();
+        $idsFuncoes = DB::table('funcoes')->select('id')->get();
+
+        dd($idsFuncoes);
 
         return view('dashboard.index', ['quantPessoas' => $quantPessoas]);
     }

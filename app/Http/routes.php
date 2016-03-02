@@ -29,6 +29,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/pessoas/cadastrar', 'Saf\PessoaController@getCreate');
     Route::post('/pessoas/cadastrar', 'Saf\PessoaController@postCreate');
 
+    Route::get('/associados', 'Saf\PessoaController@getPessoas');
+    Route::get('/doadores', 'Saf\PessoaController@getPessoas');
+    Route::get('/clubedolivro', 'Saf\PessoaController@getPessoas');
+    Route::get('/prestadores', 'Saf\PessoaController@getPessoas');
+
     Route::get('/user/edit', 'Auth\UserController@getEdit');
     Route::post('/user/edit', ['as' => 'user.update', 'uses' => 'Auth\UserController@update']);
 
