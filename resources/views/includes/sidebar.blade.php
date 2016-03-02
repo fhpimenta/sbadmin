@@ -28,16 +28,16 @@
                 <a href=""><i class="fa fa-table"></i>&nbsp; Visualização<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{{ url('/associados') }}">Associados <span class="badge">1</span></a>
+                        <a href="{{ url('/associados') }}">Associados <span class="badge">@yield('Associado')</span></a>
                     </li>
                     <li>
-                        <a href="{{ url('/doadores') }}">Doadores</a>
+                        <a href="{{ url('/doadores') }}">Doadores <span class="badge">@yield('Doador')</span></a>
                     </li>
                     <li>
-                        <a href="{{ url('/clubedolivro') }}">Clube do Livro</a>
+                        <a href="{{ url('/clubedolivro') }}">Clube do Livro <span class="badge">@yield('Clube do Livro')</span></a>
                     </li>
                     <li>
-                        <a href="{{ url('/prestadores') }}">Prestadores de Serviço</a>
+                        <a href="{{ url('/prestadores') }}">Prestadores de Serviço <span class="badge">@yield('Prestador de Serviços')</span></a>
                     </li>
                 </ul>
             </li>

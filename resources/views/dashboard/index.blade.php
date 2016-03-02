@@ -18,7 +18,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -30,6 +30,19 @@
                             <div>Pessoas cadastradas</div>
                         </div>
                     </div>
+                </div>
+                <div class="panel-footer">
+                    @foreach($arrQuant as $obj)
+                        @foreach($obj as $funcao)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="pull-left">{{ $funcao->funcao }}</span>
+                                    <span class="pull-right">{{ $funcao->quant }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endforeach
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>

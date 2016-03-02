@@ -20,11 +20,11 @@ class DashboardController extends Controller
     public function index()
     {
         $pessoa = new Pessoa();
+        $quantPessoas = $pessoa->all()->count();
 
-        $idsFuncoes = DB::table('funcoes')->select('id')->get();
-
-        dd($idsFuncoes);
-
-        return view('dashboard.index', ['quantPessoas' => $quantPessoas]);
+        $funcao = new Funcao();
+        $arrQuant = $funcao->quantByFuncao();
+        //dd($arrQuant);
+        return view('dashboard.index', ['quantPessoas' => $quantPessoas,'arrQuant' => $arrQuant]);
     }
 }
