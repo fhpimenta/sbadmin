@@ -36,6 +36,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/user/edit', 'Auth\UserController@getEdit');
     Route::post('/user/edit', ['as' => 'user.update', 'uses' => 'Auth\UserController@update']);
+    Route::get('/user/password/change', 'Auth\UserController@getPasswordForm');
+    Route::post('/user/password/change', ['as' => 'user.reset', 'uses' => 'Auth\UserController@resetPassword']);
 
     //Route::get('/', 'HomeController@index');
 });

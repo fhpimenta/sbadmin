@@ -40,4 +40,40 @@ class UserController extends Controller
         Flash::success('Usuário Editado com sucesso!!');
         return redirect('/');
     }
+
+    public function getPasswordForm()
+    {
+        return view('user.resetpassword');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $rules = [
+            'old_password' => 'required|min:6',
+            'password' => 'required|confirmed|min:6'
+        ];
+
+        $validate = Validator::make($request->all(), $rules);
+
+        if($validate->fails()) {
+            return redirect('/user/password/change')->withErrors($validate)->withInput($request->all());
+        }
+
+        $user = Auth::user();
+
+        if(Hash::check($request->input('old_password'), $user->password)) {
+            if($request->input('password') == $request->input('password_cofirmation')) {
+                $user->password = bcrypt($request->input('password'));
+                $user->save();
+                Flash::success('Senha alterada com sucesso');
+                return redirect('/');
+            }else {
+                Flash::warning('Nova senha não confirmada');
+                return redirect()->back();
+            }
+        }
+
+        Flash::warning('Senha atual está errada');
+        return redirect()->back();
+    }
 }
