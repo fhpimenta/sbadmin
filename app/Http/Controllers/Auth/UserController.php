@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laracasts\Flash\Flash;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +62,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if(Hash::check($request->input('old_password'), $user->password)) {
-            if($request->input('password') == $request->input('password_cofirmation')) {
+            if($request->input('password') == $request->input('password_confirmation')) {
                 $user->password = bcrypt($request->input('password'));
                 $user->save();
                 Flash::success('Senha alterada com sucesso');

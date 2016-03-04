@@ -19,7 +19,7 @@
                 <a href=""><i class="fa fa-edit fa-fw"></i>&nbsp; Cadastros<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{{ url('/pessoas/cadastrar') }}">Pessoas</a>
+                        <a href="{{ url('/pessoas/cadastrar') }}"><i class="fa fa-user"></i>&nbsp; Pessoas</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

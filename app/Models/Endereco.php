@@ -9,7 +9,7 @@ class Endereco extends Model
 
     protected $table = 'endereco';
 
-    protected $fillable = ['pessoas_id', 'rua', 'numero', 'bairro'];
+    protected $fillable = ['pessoas_id', 'rua', 'numero', 'cep', 'bairro'];
 
     public $timestamps = true;
 

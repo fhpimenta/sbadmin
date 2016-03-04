@@ -18,12 +18,12 @@ class Pessoa extends Model
 
     public function endereco()
     {
-        return $this->hasOne('App\Models\Endereco');
+        return $this->hasOne('App\Models\Endereco', 'pessoas_id');
     }
 
     public function telefones()
     {
-        return $this->hasMany('App\Models\Telefone');
+        return $this->hasMany('App\Models\Telefone', 'pessoas_id');
     }
 
     public function quant()

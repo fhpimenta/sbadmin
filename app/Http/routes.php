@@ -28,6 +28,9 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/pessoas/cadastrar', 'Saf\PessoaController@getCreate');
     Route::post('/pessoas/cadastrar', 'Saf\PessoaController@postCreate');
+    Route::get('/pessoas/delete/{id}', 'Saf\PessoaController@delete');
+    Route::get('/pessoas/edit/{id}', 'Saf\PessoaController@getEdit');
+    Route::post('/pessoas/edit/{id}', ['as' => 'pessoa.edit', 'uses' => 'Saf\PessoaController@postEdit']);
 
     Route::get('/associados', 'Saf\PessoaController@getPessoas');
     Route::get('/doadores', 'Saf\PessoaController@getPessoas');

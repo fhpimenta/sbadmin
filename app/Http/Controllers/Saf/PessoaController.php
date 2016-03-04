@@ -108,4 +108,26 @@ class PessoaController extends Controller
 
         return view('pessoa.table', ['title' => $funcoes[$uri]['title'], 'pessoas' => $pessoas]);
     }
+
+    public function getEdit($id)
+    {
+        $pessoa = Pessoa::find((int)$id);
+        $funcoes = Funcao::lists('funcao','id');
+
+        $options = array();
+        //foreach($pessoa->funcoes as )
+
+        return view('pessoa.edit', ['pessoa' => $pessoa, 'funcoes' => $funcoes]);
+    }
+
+    public function delete($id)
+    {
+        $id = (int)$id;
+
+        $pessoa = Pessoa::find($id);
+        $pessoa->delete();
+
+        Flash::success('Pessoa deletada com sucesso!');
+        return redirect()->back();
+    }
 }
