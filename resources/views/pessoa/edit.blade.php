@@ -76,6 +76,7 @@
                                             {!! Form::label('data_nascimento', 'Data de Nascimento') !!}
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <?php dd($pessoa->data_nascimento); ?>
                                                 {!! Form::text('data_nascimento', !empty($pessoa->data_nascimento) ? $pessoa->data_nascimento : old('data_nascimento'), ['class' => 'form-control']) !!}
                                             </div>
                                         </div>

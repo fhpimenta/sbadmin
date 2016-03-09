@@ -30,8 +30,9 @@ class PessoaController extends Controller
                 'email' => !empty($request->input('email')) ? $request->input('email') : null,
                 'cpf' => str_replace(['.', '-'], '', $request->input('cpf')),
                 'data_nascimento' => date('d-m-Y', strtotime($dataNascimento))
+                //'data_nascimento' => Date
             ];
-            //dd($dataPessoa);
+            dd($dataPessoa['data_nascimento']);
             $pessoa = Pessoa::create($dataPessoa);
 
             $dataEndereco = [
@@ -122,7 +123,7 @@ class PessoaController extends Controller
         return view('pessoa.edit', ['pessoa' => $pessoa, 'funcoes' => $funcoes, 'funcoesPessoa' => $funcoesPessoa]);
     }
 
-    public function postEdit($id, PessoaPostRequest $request)
+    public function postEdit($id, Request $request)
     {
         $id = (int)$id;
 
@@ -151,8 +152,35 @@ class PessoaController extends Controller
 
             foreach($request->input('telefones') as $value) {
                 $telefone = Telefone::where('pessoas_id', '=', $pessoa->id)->where('numero', '=', $value)->firstOrFail();
-                if(!empty())
+                if(empty($telefone)) {
+                    $dataTelefone = [
+                        'pessoas_id' => $pessoa->id,
+                        'numero' => $value
+                    ];
+
+                    Telefone::create($dataTelefone);
+                }
             }
+
+            foreach($request->input('funcoes') as $value) {
+                $funcao = PessoaFuncao::where('pessoas_id', '=', $pessoa->id)->where('funcoes_id', '=', $value)->firstOrFail();
+                if(empty($funcao)) {
+                    $dataFuncao = [
+                        'pessoas_id' => $pessoa->id,
+                        'funcoes_id' => $value
+                    ];
+
+                    PessoaFuncao::create($dataFuncao);
+                }
+            }
+
+            DB::commit();
+            Flash::success('Pessoa editada com sucesso!');
+            return redirect('/');
+        }catch(\Exception $e) {
+            DB::rollback();
+            Flash::error('Ocorreu um erro ao editar a pessoa');
+            return redirect()->back();
         }
     }
 

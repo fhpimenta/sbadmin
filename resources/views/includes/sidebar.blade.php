@@ -41,6 +41,16 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="#"><i class="fa fa-money"></i>&nbsp; Financeiro<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#">Contas</a>
+                        <a href="#">Saldo</a>
+                        <a href="#">Recibos</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

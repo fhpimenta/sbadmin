@@ -22,7 +22,9 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+//Route::get('/', 'Saf\DashboardController@index');
+
+Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::get('/', 'Saf\DashboardController@index');
 
