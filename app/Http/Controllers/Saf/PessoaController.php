@@ -24,12 +24,12 @@ class PessoaController extends Controller
     {
         DB::beginTransaction();
         try{
-
+            $dataNascimento = str_replace('/', '-', $request->input('data_nascimento'));
             $dataPessoa = [
                 'nome' => strtoupper($request->input('nome')),
                 'email' => !empty($request->input('email')) ? $request->input('email') : null,
                 'cpf' => str_replace(['.', '-'], '', $request->input('cpf')),
-                'data_nascimento' => $request->input('data_nascimento')
+                'data_nascimento' => date('d-m-Y', strtotime($dataNascimento))
             ];
             //dd($dataPessoa);
             $pessoa = Pessoa::create($dataPessoa);
@@ -114,10 +114,46 @@ class PessoaController extends Controller
         $pessoa = Pessoa::find((int)$id);
         $funcoes = Funcao::lists('funcao','id');
 
-        $options = array();
-        //foreach($pessoa->funcoes as )
+        $funcoesPessoa = array();
+        foreach($pessoa->funcoes as $funcao) {
+            $funcoesPessoa[] = $funcao->id;
+        }
 
-        return view('pessoa.edit', ['pessoa' => $pessoa, 'funcoes' => $funcoes]);
+        return view('pessoa.edit', ['pessoa' => $pessoa, 'funcoes' => $funcoes, 'funcoesPessoa' => $funcoesPessoa]);
+    }
+
+    public function postEdit($id, PessoaPostRequest $request)
+    {
+        $id = (int)$id;
+
+        DB::beginTransaction();
+
+        try{
+            $pessoa = Pessoa::find($id);
+            $enderecoId = $pessoa->endereco->id;
+
+            $dataNascimento = str_replace('/', '-', $request->input('data_nascimento'));
+            $pessoa->nome = strtoupper($request->input('nome'));
+            $pessoa->email = !empty($request->input('email')) ? $request->input('email') : null;
+            $pessoa->cpf = str_replace(['.', '-'], '', $request->input('cpf'));
+            $pessoa->data_nascimento = date('d-m-Y', strtotime($dataNascimento));
+
+            $pessoa->save();
+
+            $endereco = Endereco::find($enderecoId);
+
+            $endereco->rua = $request->input('rua');
+            $endereco->numero = !empty($request->input('numero')) ? $request->input('numero') : 's/n';
+            $endereco->cep = $request->input('cep');
+            $endereco->bairro = $request->input('bairro');
+
+            $endereco->save();
+
+            foreach($request->input('telefones') as $value) {
+                $telefone = Telefone::where('pessoas_id', '=', $pessoa->id)->where('numero', '=', $value)->firstOrFail();
+                if(!empty())
+            }
+        }
     }
 
     public function delete($id)

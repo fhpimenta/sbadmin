@@ -20,8 +20,8 @@ class CreatePessoasFuncoesTable extends Migration
         });
 
         Schema::table('pessoas_funcoes', function(Blueprint $table) {
-            $table->foreign('pessoas_id')->references('id')->on('pessoas');
-            $table->foreign('funcoes_id')->references('id')->on('funcoes');
+            $table->foreign('pessoas_id')->references('id')->on('pessoas')->onDelete('cascade');
+            $table->foreign('funcoes_id')->references('id')->on('funcoes')->onDelete('cascade');
         });
     }
 

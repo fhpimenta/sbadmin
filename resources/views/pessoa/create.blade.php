@@ -77,7 +77,7 @@
                                             {!! Form::label('data_nascimento', 'Data de Nascimento') !!}
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                {!! Form::date('data_nascimento', old('data_nascimento'), ['class' => 'form-control']) !!}
+                                                {!! Form::text('data_nascimento', old('data_nascimento'), ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -92,13 +92,19 @@
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                            {!! Form::tel('telefones[0]', old('telefones[0]'), ['class' => 'form-control', 'data-mask' => "(99) 9999-9999"]) !!}
+                                            {!! Form::tel('telefones[0]', old('telefones[0]'), ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                            {!! Form::tel('telefones[1]', old('telefones[1]'), ['class' => 'form-control', 'data-mask' => "(99) 99999-9999"]) !!}
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            {!! Form::tel('telefones[1]', old('telefones[1]'), ['class' => 'form-control']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            {!! Form::tel('telefones[2]', old('telefones[2]'), ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -177,12 +183,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script type="text/javascript">
-
-        $("#cpf").mask("999.999.999-99");
-        $("#cep").mask("99999-999");
-    </script>
 @endsection

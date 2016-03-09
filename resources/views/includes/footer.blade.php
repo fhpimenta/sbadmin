@@ -12,3 +12,6 @@
 
 <!-- Masked Input Plugin -->
 <script src="{{ asset("js/jquery.mask.min.js") }}"></script>
+
+<!-- Custom Functions Js -->
+<script src="{{ asset("js/custom.js") }}"></script>

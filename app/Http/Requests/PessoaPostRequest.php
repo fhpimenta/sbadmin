@@ -27,7 +27,7 @@ class PessoaPostRequest extends Request
             'nome' => 'required|min:10',
             'email' => 'email|unique:pessoas',
             'cpf' => 'required|unique:pessoas|min:11',
-            'data_nascimento' => 'required|date',
+            'data_nascimento' => 'required',
             'telefones' => 'required',
             'rua' => 'required|min:10',
             'cep' => 'required',

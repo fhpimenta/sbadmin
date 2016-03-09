@@ -28,7 +28,6 @@
                                 </div>
                             @endif
 
-
                             @if(count($errors) > 0)
                                 <div class="alert alert-danger">
                                     <ul>
@@ -77,7 +76,7 @@
                                             {!! Form::label('data_nascimento', 'Data de Nascimento') !!}
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                {!! Form::date('data_nascimento', !empty($pessoa->data_nascimento) ? $pessoa->data_nascimento : old('data_nascimento'), ['class' => 'form-control']) !!}
+                                                {!! Form::text('data_nascimento', !empty($pessoa->data_nascimento) ? $pessoa->data_nascimento : old('data_nascimento'), ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -89,18 +88,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                            {!! Form::tel('telefones[0]', old('telefones[0]'), ['class' => 'form-control', 'data-mask' => "(99) 9999-9999"]) !!}
+                                    @for($i = 0; $i < 3; $i++)
+                                        <div class="form-group col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                @if(isset($pessoa->telefones[$i]))
+                                                    {!! Form::tel("telefones[$i]", !empty(old("telefones[$i]")) ? old("telefones[$i]") : $pessoa->telefones[$i]->numero, ['class' => 'form-control']) !!}
+                                                @else
+                                                    {!! Form::tel("telefones[$i]", old("telefones[$i]"), ['class' => 'form-control']) !!}
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                            {!! Form::tel('telefones[1]', old('telefones[1]'), ['class' => 'form-control', 'data-mask' => "(99) 99999-9999"]) !!}
-                                        </div>
-                                    </div>
+                                    @endfor
                                 </div>
 
                             </fieldset>
@@ -155,7 +154,7 @@
                                 @for($i = 1; $i <= count($funcoes); $i++)
                                     <div class="checkbox">
                                         <label>
-                                            {!! Form::checkbox("funcoes[$i]", $i, old("funcoes[$i]")) !!}<strong>{{ $funcoes[$i] }}</strong>
+                                            {!! Form::checkbox("funcoes[$i]", $i, in_array($i,$funcoesPessoa) ? true : false) !!}<strong>{{ $funcoes[$i] }}</strong>
                                         </label>
                                     </div>
                                 @endfor
@@ -177,12 +176,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script type="text/javascript">
-
-        $("#cpf").mask("999.999.999-99");
-        $("#cep").mask("99999-999");
-    </script>
 @endsection
