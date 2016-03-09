@@ -29,10 +29,9 @@ class PessoaController extends Controller
                 'nome' => strtoupper($request->input('nome')),
                 'email' => !empty($request->input('email')) ? $request->input('email') : null,
                 'cpf' => str_replace(['.', '-'], '', $request->input('cpf')),
-                'data_nascimento' => date('d-m-Y', strtotime($dataNascimento))
-                //'data_nascimento' => Date
+                'data_nascimento' => date('Y-m-d', strtotime($dataNascimento))
             ];
-            dd($dataPessoa['data_nascimento']);
+
             $pessoa = Pessoa::create($dataPessoa);
 
             $dataEndereco = [
@@ -46,12 +45,14 @@ class PessoaController extends Controller
             Endereco::create($dataEndereco);
 
             foreach($request->input('telefones') as $value) {
-                $dataTelefone = [
-                    'pessoas_id' => $pessoa->id,
-                    'numero' => $value
-                ];
+                if($value != '') {
+                    $dataTelefone = [
+                        'pessoas_id' => $pessoa->id,
+                        'numero' => $value
+                    ];
 
-                Telefone::create($dataTelefone);
+                    Telefone::create($dataTelefone);
+                }
             }
 
             foreach($request->input('funcoes') as $value) {
@@ -97,12 +98,9 @@ class PessoaController extends Controller
 
         $uri = $request->path();
 
-        $pessoas = DB::table('pessoas AS p')
-                            ->join('pessoas_funcoes AS pf', 'p.id', '=', 'pf.pessoas_id')
-                            ->join('funcoes AS f', 'f.id', '=', 'pf.funcoes_id')
-                            ->select('p.*')
-                            ->where('f.id', '=', $funcoes[$uri]['id'])
-                            ->get();
+        $pessoas = Pessoa::whereHas('funcoes', function($q) use ($funcoes,$uri) {
+            $q->where('funcoes.id', '=', $funcoes[$uri]['id']);
+        })->get();
         if(empty($pessoas)){
             $pessoas = null;
         }
@@ -137,7 +135,7 @@ class PessoaController extends Controller
             $pessoa->nome = strtoupper($request->input('nome'));
             $pessoa->email = !empty($request->input('email')) ? $request->input('email') : null;
             $pessoa->cpf = str_replace(['.', '-'], '', $request->input('cpf'));
-            $pessoa->data_nascimento = date('d-m-Y', strtotime($dataNascimento));
+            $pessoa->data_nascimento = date('Y-m-d', strtotime($dataNascimento));
 
             $pessoa->save();
 
@@ -151,23 +149,26 @@ class PessoaController extends Controller
             $endereco->save();
 
             foreach($request->input('telefones') as $value) {
-                $telefone = Telefone::where('pessoas_id', '=', $pessoa->id)->where('numero', '=', $value)->firstOrFail();
-                if(empty($telefone)) {
-                    $dataTelefone = [
-                        'pessoas_id' => $pessoa->id,
-                        'numero' => $value
-                    ];
+                if($value != '') {
+                    $telefone = Telefone::where('pessoas_id', '=', $pessoa->id)->where('numero', '=', $value)->first();
+                    if (empty($telefone)) {
+                        $dataTelefone = [
+                            'pessoas_id' => $pessoa->id,
+                            'numero' => $value
+                        ];
 
-                    Telefone::create($dataTelefone);
+                        Telefone::create($dataTelefone);
+                    }
                 }
             }
 
             foreach($request->input('funcoes') as $value) {
-                $funcao = PessoaFuncao::where('pessoas_id', '=', $pessoa->id)->where('funcoes_id', '=', $value)->firstOrFail();
+                $funcao = PessoaFuncao::where('pessoas_id', '=', $pessoa->id)->where('funcoes_id', '=', (int)$value)->first();
+                //dd((int)$value);
                 if(empty($funcao)) {
                     $dataFuncao = [
                         'pessoas_id' => $pessoa->id,
-                        'funcoes_id' => $value
+                        'funcoes_id' => (int)$value
                     ];
 
                     PessoaFuncao::create($dataFuncao);

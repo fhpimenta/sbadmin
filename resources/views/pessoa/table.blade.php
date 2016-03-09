@@ -43,11 +43,12 @@
                                 <tr class="odd gradeX">
                                     <td>{{$p->nome}}</td>
                                     <td>
-                                        <a type="button" class="btn btn-primary btn-circle" title="mostrar" href="{{ url('/pessoas/show/'.$p->id) }}"><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="btn btn-primary btn-circle" title="mostrar" data-toggle="modal" data-target="#show-person{{ $p->id}}" ><i class="fa fa-eye"></i></a>
                                         <a type="button" class="btn btn-success btn-circle" title="editar" href="{{ url('/pessoas/edit/'.$p->id) }}"><i class="fa fa-edit"></i></a>
                                         <a type="button" class="btn btn-danger btn-circle" title="deletar" href="{{ url('/pessoas/delete/'.$p->id) }}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
+                                @include('pessoa.show', ['pessoa' => $p])
                                 @endforeach
                             </tbody>
                         </table>
